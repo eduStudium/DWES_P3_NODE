@@ -1,0 +1,49 @@
+const http = require('http');
+const url = require('url');
+
+const server = http.createServer();
+server.on('request', function(peticion, respuesta) 
+{
+
+
+    let urlGeneral = url.parse(peticion.url, true);
+    let salida = "";
+    let parametros = urlGeneral.query
+    if(urlGeneral.pathname=="/dni"){
+
+
+        if(parametros.num=="12345678"){
+			parametros.letra="A"
+            salida+="EL DNI ES "+parametros.num;
+
+        }else if(parametros.num=="77811530"){
+			parametros.letra="B"
+            salida+="EL DNI ES "+parametros.num;
+
+        }else{
+            salida+="NO EXISTE VALOR PARA EL NÚMERO INTRODUCIDO";
+
+        }
+
+        if(parametros.letra=="A"){
+            salida+=" EL DNI TERMINA EN "+parametros.letra;
+
+        }else if(parametros.letra=="B"){
+            salida+=" EL DNI TERMINA EN "+parametros.letra;
+
+        }else{
+            salida+=" NO EXISTE VALOR PARA LA LETRA INTRODUCIDA";
+
+        }
+        
+    }
+
+
+    respuesta.writeHead(200,{'Content-Type':'text/plain;charset=utf-8'});
+    respuesta.write(salida);
+    respuesta.end();
+});
+server.listen(8083, '127.0.0.3');
+
+
+console.log('ejecutado');
