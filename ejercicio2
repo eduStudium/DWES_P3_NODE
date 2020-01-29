@@ -1,0 +1,26 @@
+const http = require('http');
+const url = require('url');
+const fs = require('fs');
+
+
+const server = http.createServer();
+server.on('request', function(peticion, respuesta){
+
+    let urlBase = url.parse(peticion.url,true);
+    let salida="";
+    if(urlBase.pathname=="/dni"){
+        fs.readFile("./instrucciones.html", function(err,contenido){
+                if(err){
+                    //tratamos el error
+                }
+                    respuesta.writeHead(200,{'Content-Type':'text/html;charset=utf-8'});
+                    respuesta.write(contenido);
+                    respuesta.end();
+  
+        })
+    }
+}).listen(8083, '127.0.0.3');
+
+
+console.log('ejecutado');
+    
