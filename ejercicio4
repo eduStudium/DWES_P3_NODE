@@ -1,0 +1,30 @@
+const http = require('http');
+const url = require('url');
+const fs = require('fs');
+var contenido ="Eduardo Olaya Galán";
+
+const server = http.createServer();
+server.on('request', function(peticion, respuesta){
+    
+    var urlBase = url.parse(peticion.url, true);
+    var salida = "";
+
+    if(urlBase.pathname=="/escribir"){
+        fs.mkdir("./Copia",function(err){
+            fs.appendFile("Copia/holaMundo.txt",contenido,function(err){
+            if(err){
+                //tratar error;
+            }
+            respuesta.writeHead(200,{'Content-Type':'text/plain;charset=utf-8'});
+            respuesta.write('Carpeta y archivo creados con éxito');
+            respuesta.end();
+        })
+        })
+    }
+});
+server.listen(8083, '127.0.0.3');
+console.log('ejecutado');
+
+
+
+
